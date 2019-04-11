@@ -64,15 +64,15 @@ class AnnotationParser
         $reflectionClass = new ReflectionClass($className);
         if ($reflectionClass->hasMethod('__construct')) {
             return $reflectionClass->newInstanceArgs([$arr]);
-        } else {
-            $obj = $reflectionClass->newInstance();
-            foreach ($arr as $key => $value) {
-                if ($reflectionClass->hasProperty($key)) {
-                    $reflectionClass->getProperty($key)->setValue($obj, $value);
-                }
-            }
-            return $obj;
         }
+
+        $obj = $reflectionClass->newInstance();
+        foreach ($arr as $key => $value) {
+            if ($reflectionClass->hasProperty($key)) {
+                $reflectionClass->getProperty($key)->setValue($obj, $value);
+            }
+        }
+        return $obj;
 
     }
 
