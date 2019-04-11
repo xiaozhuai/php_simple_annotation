@@ -11,6 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 class AnnotationParser
 {
     protected $classMap;
+    protected $scopes = [];
 
     /**
      * AnnotationParser constructor.
@@ -34,7 +35,7 @@ class AnnotationParser
             return [];
         }
 
-        $data = [];
+        $scopes = [];
         $scopeCount = count($matches[0]);
         for ($i = 0; $i < $scopeCount; $i++) {
             $scopeName = $matches[1][$i];
@@ -47,10 +48,27 @@ class AnnotationParser
                 $scope = $this->toObject($this->classMap[$scopeName], $scope);
             }
 
-            $data[$scopeName] = $scope;
+            $scopes[$scopeName] = $scope;
         }
 
-        return $data;
+        $this->scopes = $scopes;
+        return $this->scopes;
+    }
+
+    /**
+     * @return array
+     */
+    public function getScopes()
+    {
+        return $this->scopes;
+    }
+
+    public function getScope($key, $default = null)
+    {
+        if (!array_key_exists($key, $this->scopes)) {
+            return $default;
+        }
+        return $this->scopes[$key];
     }
 
     /**
