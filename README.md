@@ -29,6 +29,36 @@ final class RouteParams
     public $group;
     public $method;
     public $pattern;
+    public $isGroup = false;
+
+    const ALL_METHODS = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'];
+
+    public function __construct($args)
+    {
+        $this->pattern = $args['pattern'] ?? '';
+        $this->group = $args['group'] ?? null;
+        $this->isGroup = !empty($this->group);
+
+        $this->method = $args['method'] ?? null;
+
+        if ($this->method !== null) {
+            if ($this->method === 'ANY') {
+                $this->method = static::ALL_METHODS;
+            }
+
+            if (!is_array($this->method)) {
+                $this->method = [$this->method];
+            }
+
+            $this->method = array_map('strtoupper', $this->method);
+
+            foreach ($this->method as $m) {
+                if (!$this->isGroup && !in_array($m, static::ALL_METHODS, true)) {
+                    throw new RuntimeException('Invalid method ' . $m);
+                }
+            }
+        }
+    }
 }
 
 class AuthParams
@@ -47,7 +77,7 @@ class TestAnnotationOrderController
 {
     /**
      * @Route {
-     *      method      : POST
+     *      method      : post
      *      pattern     : /create
      * }
      * @Auth {
@@ -101,6 +131,7 @@ Array
             [group] => /order
             [method] => 
             [pattern] => 
+            [isGroup] => 1
         )
 
 )
@@ -109,8 +140,13 @@ Array
     [Route] => RouteParams Object
         (
             [group] => 
-            [method] => POST
+            [method] => Array
+                (
+                    [0] => POST
+                )
+
             [pattern] => /create
+            [isGroup] => 
         )
 
     [Auth] => AuthParams Object
@@ -126,8 +162,13 @@ Array
     [Route] => RouteParams Object
         (
             [group] => 
-            [method] => GET
+            [method] => Array
+                (
+                    [0] => GET
+                )
+
             [pattern] => /delete
+            [isGroup] => 
         )
 
     [Auth] => AuthParams Object
