@@ -1,21 +1,21 @@
 # php_simple_annotation
-A simple and sexy annotation library for php based on yaml.
+一个小巧且性感的php注解库, 基于yaml.
 
-If `ext-yaml` is installed, use it to parse yaml , otherwise use `symfony/yaml`.
+默认使用`symfony/yaml`来解析yaml, 如果安装了yaml扩展, 则使用`ext-yaml`扩展库来解析yaml以提高性能.
 
-## Installation
+## 安装
 ``` bash
 $ composer require xiaozhuai/php_simple_annotation
 ```
 
-## Syntax
+## 注解语法
 ```
 @<scope> {
     <yaml content>
 }
 ```
 
-## Sample Code
+## 示例代码
 ``` php
 <?php
 
@@ -76,7 +76,7 @@ class TestAnnotationOrderController
     }
 }
 
-// return array if no classmap provided
+// 如果不提供classmap则返回数组
 $parser = new AnnotationParser([
     'Route' => RouteParams::class,
     'Auth' => AuthParams::class,
@@ -92,7 +92,7 @@ foreach ($methods as $method) {
 }
 ```
 
-## Output
+## 输出
 ```
 Array
 (

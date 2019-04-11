@@ -1,6 +1,6 @@
 {
     "name": "xiaozhuai/php_simple_annotation",
-    "description": "Simple annotation for php based on yaml",
+    "description": "A simple and sexy annotation library for php based on yaml.",
     "type": "library",
     "license": "MIT",
     "authors": [
