@@ -1,0 +1,23 @@
+{
+    "name": "xiaozhuai/php_simple_annotation",
+    "description": "Simple annotation for php based on yaml",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "xiaozhuai",
+            "email": "798047000@qq.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "xiaozhuai\\": "src"
+        }
+    },
+    "require": {
+        "symfony/yaml": "^4.2"
+    },
+    "suggest": {
+        "ext-yaml": "*"
+    }
+}
